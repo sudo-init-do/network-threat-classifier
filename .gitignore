@@ -1,0 +1,4 @@
+*.gz
+data/kddcup.data_10_percent
+__pycache__/
+*.png  # Unless you want to commit plots
