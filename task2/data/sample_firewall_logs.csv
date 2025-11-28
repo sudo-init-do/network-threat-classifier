@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+
+# Generate synthetic logs
+np.random.seed(42)
+n_logs = 1000
+start_time = datetime(2025, 11, 28, 9, 0, 0)
+timestamps = [start_time + timedelta(seconds=i*10 + np.random.randint(0, 60)) for i in range(n_logs)]
+
+src_ips = np.random.choice(['192.168.1.10', '192.168.1.20', '10.0.0.5', '203.0.113.50', '198.51.100.1'], n_logs, p=[0.3, 0.3, 0.2, 0.1, 0.1])  # Last two "suspicious"
+dst_ip = '192.168.1.1'  # Your server
+ports = np.random.choice([22, 80, 443, 3389, 21], n_logs)  # SSH, HTTP, HTTPS, RDP, FTP
+actions = np.random.choice(['ACCEPT', 'DENY'], n_logs, p=[0.7, 0.3])
+reasons = np.random.choice(['OK', 'INVALID', 'AUTH_FAIL', 'PORT_SCAN', 'FLOOD'], n_logs)
+
+# Simulate patterns: IP 203.0.113.50 scans port 22 (many DENY), 198.51.100.1 brute-force (AUTH_FAIL on 22)
+mask_scan = np.random.choice([True, False], n_logs, p=[0.1, 0.9])
+mask_brute = np.random.choice([True, False], n_logs, p=[0.05, 0.95])
+for i in range(n_logs):
+    if src_ips[i] == '203.0.113.50' and ports[i] == 22:
+        actions[i] = 'DENY'
+        reasons[i] = 'PORT_SCAN'
+    if src_ips[i] == '198.51.100.1' and ports[i] == 22:
+        actions[i] = 'DENY'
+        reasons[i] = 'AUTH_FAIL'
+
+data = pd.DataFrame({
+    'timestamp': timestamps,
+    'src_ip': src_ips,
+    'dst_ip': dst_ip,
+    'port': ports,
+    'action': actions,
+    'reason': reasons
+})
+
+data.to_csv('task2/data/sample_firewall_logs.csv', index=False)
+print("Sample logs generated: task2/data/sample_firewall_logs.csv")
