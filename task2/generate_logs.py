@@ -6,10 +6,10 @@ import os
 # Create directory if missing
 os.makedirs('task2/data', exist_ok=True)
 
-np.random.seed(42)  # Reproducible threats
+np.random.seed(42)
 n_logs = 1000
-start_time = datetime(2025, 11, 28, 9, 0, 0)  # Current date, 9AM
-timestamps = [start_time + timedelta(seconds=np.random.randint(0, 3600)) for _ in range(n_logs)]  # ~1 hour spread
+start_time = datetime(2025, 11, 28, 9, 0, 0)
+timestamps = [start_time + timedelta(seconds=np.random.randint(0, 3600)) for _ in range(n_logs)]
 
 src_ips = np.random.choice(['192.168.1.10', '192.168.1.20', '10.0.0.5', '203.0.113.50', '198.51.100.1'], n_logs, p=[0.3, 0.3, 0.2, 0.1, 0.1])
 dst_ip = '192.168.1.1'
@@ -19,10 +19,10 @@ reasons = np.random.choice(['OK', 'INVALID', 'AUTH_FAIL', 'PORT_SCAN', 'FLOOD'],
 
 # Embed threats
 for i in range(n_logs):
-    if src_ips[i] == '203.0.113.50' and ports[i] == 22:  # Port scan on SSH
+    if src_ips[i] == '203.0.113.50' and ports[i] == 22:
         actions[i] = 'DENY'
         reasons[i] = 'PORT_SCAN'
-    if src_ips[i] == '198.51.100.1' and ports[i] == 22:  # Brute-force on SSH
+    if src_ips[i] == '198.51.100.1' and ports[i] == 22:
         actions[i] = 'DENY'
         reasons[i] = 'AUTH_FAIL'
 

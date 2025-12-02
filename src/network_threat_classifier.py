@@ -4,8 +4,16 @@ from sklearn.datasets import fetch_kddcup99
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-import seaborn as sns  # Optional for better confusion matrix plot; can remove if not allowed
+import seaborn as sns
+import argparse
+import sys
+
+# Batch mode flag
+parser = argparse.ArgumentParser()
+parser.add_argument('--batch', action='store_true', help='Run in batch mode (no interactive plot)')
+args = parser.parse_args()
 
 # Step 1: Load the dataset using scikit-learn (auto-downloads 10% subset if needed)
 print("Loading KDD Cup 99 10% dataset...")
@@ -16,9 +24,6 @@ try:
     print("Dataset loaded successfully via scikit-learn!")
 except Exception as e:
     print(f"Auto-load failed: {e}. Falling back to manual file (ensure data/kddcup.data_10_percent exists).")
-    # Fallback: Uncomment and fill if needed
-    # columns = [ ... ]  # Full columns list
-    # data = pd.read_csv('data/kddcup.data_10_percent', names=columns + ['label'], header=None)
     raise e
 
 # Define column names for features (standard for KDD Cup 99)
@@ -69,6 +74,11 @@ print(f"Processed features shape: {X.shape}")  # ~122 columns after one-hot
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 print(f"Train shape: {X_train.shape}, Test shape: {X_test.shape}")
 
+# Scale features to fix convergence issues
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
 # Step 5: Train Logistic Regression model
 model = LogisticRegression(max_iter=1000, random_state=42)
 model.fit(X_train, y_train)
@@ -94,4 +104,7 @@ plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
 plt.savefig('confusion_matrix.png')  # Save for GitHub
-plt.show()
+if not args.batch:
+    plt.show()
+else:
+    plt.close()  # Close without showing

@@ -1,0 +1,35 @@
+Loading KDD Cup 99 10% dataset...
+Dataset loaded successfully via scikit-learn!
+Dataset shape: (494021, 43)
+Label distribution:
+label_clean
+smurf      280790
+neptune    107201
+normal      97278
+back         2203
+satan        1589
+Name: count, dtype: int64
+Binary label distribution:
+binary_label
+1    396743
+0     97278
+Name: count, dtype: int64
+Processed features shape: (494021, 118)
+Train shape: (395216, 118), Test shape: (98805, 118)
+
+Model Accuracy Score: 0.9987
+
+Confusion Matrix:
+[[19404    52]
+ [   72 79277]]
+
+Prediction Report:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     19456
+           1       1.00      1.00      1.00     79349
+
+    accuracy                           1.00     98805
+   macro avg       1.00      1.00      1.00     98805
+weighted avg       1.00      1.00      1.00     98805
+
