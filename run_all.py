@@ -13,9 +13,8 @@ def run_task(script_path, output_file, description, timeout=300):
     print(f"=== {description} ===")
     try:
         with open(output_file, 'w') as f:
-            # Use --batch to avoid interactive plots
             # Use sys.executable to ensure we use the same python interpreter (venv)
-            result = subprocess.run([sys.executable, script_path, '--batch'], stdout=f, stderr=subprocess.STDOUT, cwd=os.getcwd(), timeout=timeout)
+            result = subprocess.run([sys.executable, script_path], stdout=f, stderr=subprocess.STDOUT, cwd=os.getcwd(), timeout=timeout)
         if result.returncode == 0:
             print(f"{description} complete. Output saved to {output_file}")
             # Preview last 5 lines
@@ -40,4 +39,4 @@ run_task('src/network_threat_classifier.py', 'results/task1_output.txt', 'Task 1
 # Task 2
 run_task('task2/src/firewall_threat_finder.py', 'results/task2_output.txt', 'Task 2: Firewall Log Threat Pattern Finder')
 
-print("All tasks done! Check results/ for outputs and plots (saved as PNGs, no popups).")
+print("All tasks done! Check results/ for outputs. Plots have been displayed and saved as PNGs.")
