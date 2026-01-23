@@ -1,3 +1,18 @@
-/Users/Cyberkid/.matplotlib is not a writable directory
-Matplotlib created a temporary cache directory at /var/folders/nc/j0_qb68d56n41c1cs268md0r0000gn/T/matplotlib-l721lv6g because there was an issue with the default path (/Users/Cyberkid/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
-Matplotlib is building the font cache; this may take a moment.
+Loaded 1000 log entries.
+            timestamp        src_ip       dst_ip  port  action     reason
+0 2025-11-28 09:52:54  192.168.1.20  192.168.1.1  3389  ACCEPT    INVALID
+1 2025-11-28 09:58:27  192.168.1.20  192.168.1.1    80  ACCEPT    INVALID
+2 2025-11-28 09:14:20  192.168.1.20  192.168.1.1    22  ACCEPT         OK
+3 2025-11-28 09:21:34  198.51.100.1  192.168.1.1    80  ACCEPT         OK
+4 2025-11-28 09:18:50  192.168.1.20  192.168.1.1   443  ACCEPT  AUTH_FAIL
+
+No threats detected in sample. (Try lowering thresholds or rerunning with different seed.)
+
+Top Deny IPs:
+src_ip_extracted
+192.168.1.10    98
+192.168.1.20    74
+10.0.0.5        58
+203.0.113.50    51
+198.51.100.1    45
+dtype: int64

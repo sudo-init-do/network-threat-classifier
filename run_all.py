@@ -14,7 +14,7 @@ def run_task(script_path, output_file, description, timeout=300):
     try:
         with open(output_file, 'w') as f:
             # Use sys.executable to ensure we use the same python interpreter (venv)
-            result = subprocess.run([sys.executable, script_path], stdout=f, stderr=subprocess.STDOUT, cwd=os.getcwd(), timeout=timeout)
+            result = subprocess.run([sys.executable, script_path, '--batch'], stdout=f, stderr=subprocess.STDOUT, cwd=os.getcwd(), timeout=timeout)
         if result.returncode == 0:
             print(f"{description} complete. Output saved to {output_file}")
             # Preview last 5 lines
